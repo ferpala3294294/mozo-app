@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'categoria_sandwiches_screen.dart';
 import 'categoria_pizzas_screen.dart';
 import 'categoria_empanadas_screen.dart';
+import 'categoria_combos_screen.dart';
 import 'detalle.dart';
 import 'pedido_manager.dart';
 import '../producto_service.dart';
@@ -628,6 +629,24 @@ final Color fondo = const Color(0xFFF8F6F0);
                             seleccionado: true,
                           ),
                         ),
+                        const SizedBox(width: 10),
+
+Expanded(
+  child: categoriaBoton(
+    'Combos',
+    () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => CategoriaCombosScreen(
+            mesa: widget.mesa,
+            idMesa: widget.idMesa,
+          ),
+        ),
+      );
+    },
+  ),
+),
                       ],
                     ),
 

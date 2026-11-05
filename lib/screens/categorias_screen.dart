@@ -3,6 +3,7 @@ import 'categoria_sandwiches_screen.dart';
 import 'categoria_pizzas_screen.dart';
 import 'categoria_empanadas_screen.dart';
 import 'categoria_bebidas_screen.dart';
+import 'categoria_combos_screen.dart';
 import 'detalle.dart';
 
 class CategoriasScreen extends StatelessWidget {
@@ -97,16 +98,16 @@ static const Color azulOscuro = Color(0xFF1E293B);
 
                   // TARJETAS UN POCO MÁS CHICAS
                   final double altoTarjeta = esCelular
-                      ? (altoDisponible * 0.095).clamp(95.0, 115.0)
-                      : 78.0;
+                       ? (altoDisponible * 0.070).clamp(56.0, 66.0)
+    : 64.0;
 
                   // ESPACIO ENTRE TARJETAS
-                  final double espacio = esCelular ? 14.0 : 14.0;
+                  final double espacio = esCelular ? 9.0 : 14.0;
 
                   return SingleChildScrollView(
                     padding: EdgeInsets.symmetric(
                       horizontal: paddingHorizontal,
-                      vertical: esCelular ? 30.0 : 30.0,
+                        vertical: esCelular ? 16.0 : 30.0,
                     ),
                     child: Center(
                       child: ConstrainedBox(
@@ -233,7 +234,28 @@ static const Color azulOscuro = Color(0xFF1E293B);
                             ),
 
                             SizedBox(height: espacio),
+                            // COMBOS
+GestureDetector(
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CategoriaCombosScreen(
+          mesa: mesa,
+          idMesa: idMesa,
+        ),
+      ),
+    );
+  },
+  child: categoria(
+    icono: Icons.fastfood,
+    texto: 'Combos',
+    alto: altoTarjeta,
+    ancho: ancho,
+  ),
+),
 
+SizedBox(height: espacio),
                             // VER PEDIDO
                             GestureDetector(
                               onTap: () {
