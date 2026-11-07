@@ -560,187 +560,85 @@ class _CategoriaCombosScreenState extends State<CategoriaCombosScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        if (constraints.maxWidth < 600) {
-                          return SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 115,
-                                  child: categoriaBoton(
-                                    'Sandwiches',
-                                    () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) =>
-                                              CategoriaSandwichesScreen(
-                                            mesa: widget.mesa,
-                                            idMesa: widget.idMesa,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                SizedBox(
-                                  width: 115,
-                                  child: categoriaBoton(
-                                    'Pizzas',
-                                    () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) =>
-                                              CategoriaPizzasScreen(
-                                            mesa: widget.mesa,
-                                            idMesa: widget.idMesa,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                SizedBox(
-                                  width: 115,
-                                  child: categoriaBoton(
-                                    'Empanadas',
-                                    () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) =>
-                                              CategoriaEmpanadasScreen(
-                                            mesa: widget.mesa,
-                                            idMesa: widget.idMesa,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                SizedBox(
-                                  width: 115,
-                                  child: categoriaBoton(
-                                    'Bebidas',
-                                    () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) =>
-                                              CategoriaBebidasScreen(
-                                            mesa: widget.mesa,
-                                            idMesa: widget.idMesa,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                SizedBox(
-                                  width: 115,
-                                  child: categoriaBoton(
-                                    'Combos',
-                                    () {},
-                                    seleccionado: true,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-
-                        return Row(
-                          children: [
-                            Expanded(
-                              child: categoriaBoton(
-                                'Sandwiches',
-                                () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          CategoriaSandwichesScreen(
-                                        mesa: widget.mesa,
-                                        idMesa: widget.idMesa,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: categoriaBoton(
-                                'Pizzas',
-                                () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          CategoriaPizzasScreen(
-                                        mesa: widget.mesa,
-                                        idMesa: widget.idMesa,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: categoriaBoton(
-                                'Empanadas',
-                                () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          CategoriaEmpanadasScreen(
-                                        mesa: widget.mesa,
-                                        idMesa: widget.idMesa,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: categoriaBoton(
-                                'Bebidas',
-                                () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          CategoriaBebidasScreen(
-                                        mesa: widget.mesa,
-                                        idMesa: widget.idMesa,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: categoriaBoton(
-                                'Combos',
-                                () {},
-                                seleccionado: true,
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
+                    Row(
+  children: [
+    Expanded(
+      child: categoriaBoton(
+        'Sandwiches',
+        () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => CategoriaSandwichesScreen(
+                mesa: widget.mesa,
+                idMesa: widget.idMesa,
+              ),
+            ),
+          );
+        },
+      ),
+    ),
+    const SizedBox(width: 10),
+    Expanded(
+      child: categoriaBoton(
+        'Pizzas',
+        () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => CategoriaPizzasScreen(
+                mesa: widget.mesa,
+                idMesa: widget.idMesa,
+              ),
+            ),
+          );
+        },
+      ),
+    ),
+    const SizedBox(width: 10),
+    Expanded(
+      child: categoriaBoton(
+        'Empanadas',
+        () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => CategoriaEmpanadasScreen(
+                mesa: widget.mesa,
+                idMesa: widget.idMesa,
+              ),
+            ),
+          );
+        },
+      ),
+    ),
+    const SizedBox(width: 10),
+    Expanded(
+      child: categoriaBoton(
+        'Bebidas',
+        () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => CategoriaBebidasScreen(
+                mesa: widget.mesa,
+                idMesa: widget.idMesa,
+              ),
+            ),
+          );
+        },
+      ),
+    ),
+    const SizedBox(width: 10),
+    Expanded(
+      child: categoriaBoton(
+        'Combos',
+        () {},
+        seleccionado: true,
+      ),
+    ),
+  ],
+),
 
                     const SizedBox(height: 25),
 
