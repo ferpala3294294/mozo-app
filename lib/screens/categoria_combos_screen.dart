@@ -525,23 +525,58 @@ class _CategoriaCombosScreenState extends State<CategoriaCombosScreen> {
                     ),
                   ),
 
-                  IconButton(
-                    icon: const Icon(
-                      Icons.shopping_cart_outlined,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetalleScreen(
-                            mesa: widget.mesa,
-                            idMesa: widget.idMesa,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                  
+IconButton(
+  icon: Stack(
+    clipBehavior: Clip.none,
+    children: [
+      const Icon(
+        Icons.shopping_cart_outlined,
+        color: Colors.white,
+      ),
+
+      if (pedidoManager.cantidadProductos > 0)
+        Positioned(
+          right: -9,
+          top: -9,
+          child: Container(
+            padding: const EdgeInsets.all(4),
+            constraints: const BoxConstraints(
+              minWidth: 19,
+              minHeight: 19,
+            ),
+            decoration: const BoxDecoration(
+              color: Colors.red,
+              shape: BoxShape.circle,
+            ),
+            child: Text(
+              pedidoManager.cantidadProductos > 99
+                  ? '99+'
+                  : '${pedidoManager.cantidadProductos}',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 11,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+    ],
+  ),
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetalleScreen(
+          mesa: widget.mesa,
+          idMesa: widget.idMesa,
+        ),
+      ),
+    );
+  },
+),
+
 
                   IconButton(
                     icon: const Icon(
@@ -566,7 +601,7 @@ class _CategoriaCombosScreenState extends State<CategoriaCombosScreen> {
       child: categoriaBoton(
         'Sandwiches',
         () {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (_) => CategoriaSandwichesScreen(
@@ -583,7 +618,7 @@ class _CategoriaCombosScreenState extends State<CategoriaCombosScreen> {
       child: categoriaBoton(
         'Pizzas',
         () {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (_) => CategoriaPizzasScreen(
@@ -600,7 +635,7 @@ class _CategoriaCombosScreenState extends State<CategoriaCombosScreen> {
       child: categoriaBoton(
         'Empanadas',
         () {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (_) => CategoriaEmpanadasScreen(
@@ -617,7 +652,7 @@ class _CategoriaCombosScreenState extends State<CategoriaCombosScreen> {
       child: categoriaBoton(
         'Bebidas',
         () {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (_) => CategoriaBebidasScreen(
