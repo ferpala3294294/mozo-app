@@ -83,4 +83,54 @@ class MesaService {
         .map((pedido) => Map<String, dynamic>.from(pedido as Map))
         .toList();
   }
+    // Obtener todas las secciones registradas en Laravel.
+  static Future<List<Map<String, dynamic>>> obtenerSecciones() async {
+    final response = await http
+        .get(Uri.parse('$baseUrl/api/secciones'))
+        .timeout(const Duration(seconds: 10));
+
+    if (response.statusCode != 200) {
+      throw Exception(
+        'Error al obtener las secciones: ${response.statusCode}',
+      );
+    }
+
+    final Map<String, dynamic> respuesta =
+        jsonDecode(response.body) as Map<String, dynamic>;
+
+    if (respuesta['exito'] != true) {
+      throw Exception('Laravel no devolvió las secciones correctamente.');
+    }
+
+    final List<dynamic> datos = respuesta['data'] ?? [];
+
+    return datos
+        .map((seccion) => Map<String, dynamic>.from(seccion as Map))
+        .toList();
+  }
+  // Obtener todas las categorías desde Laravel.
+static Future<List<Map<String, dynamic>>> obtenerCategorias() async {
+  final response = await http
+      .get(Uri.parse('$baseUrl/api/v1/categorias'))
+      .timeout(const Duration(seconds: 10));
+
+  if (response.statusCode != 200) {
+    throw Exception(
+      'Error al obtener las categorías: ${response.statusCode}',
+    );
+  }
+
+  final Map<String, dynamic> respuesta =
+      jsonDecode(response.body) as Map<String, dynamic>;
+
+  if (respuesta['exito'] != true) {
+    throw Exception('Laravel no devolvió las categorías correctamente.');
+  }
+
+  final List<dynamic> datos = respuesta['data'] ?? [];
+
+  return datos
+      .map((categoria) => Map<String, dynamic>.from(categoria as Map))
+      .toList();
+}
 }

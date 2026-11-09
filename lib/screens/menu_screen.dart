@@ -28,6 +28,7 @@ static const Color fondo = Color(0xFFF8F6F0);
   ];
 
   List<Map<String, dynamic>> mesasServidor = [];
+  List<Map<String, dynamic>> seccionesServidor = [];
   bool cargandoMesas = true;
   String? errorMesas;
 
@@ -71,6 +72,7 @@ void dispose() {
       setState(() {});
     }
   }
+
 Future<void> cargarMesas() async {
   if (!mounted) return;
 
@@ -80,12 +82,31 @@ Future<void> cargarMesas() async {
   });
 
   try {
-    final resultado = await MesaService.obtenerMesas();
+    final resultadoMesas = await MesaService.obtenerMesas();
+
+    List<Map<String, dynamic>> resultadoSecciones =
+        seccionesServidor;
+
+    try {
+      resultadoSecciones = await MesaService.obtenerSecciones();
+    } catch (e) {
+      debugPrint('Error al cargar secciones: $e');
+    }
 
     if (!mounted) return;
 
     setState(() {
-      mesasServidor = resultado;
+      mesasServidor = resultadoMesas;
+      seccionesServidor = resultadoSecciones;
+
+      if (filtroSeleccionado != 'Todas' &&
+          !seccionesServidor.any(
+            (s) => s['seccion'].toString().toLowerCase() ==
+                filtroSeleccionado.toLowerCase(),
+          )) {
+        filtroSeleccionado = 'Todas';
+      }
+
       cargandoMesas = false;
     });
   } catch (e) {
@@ -97,6 +118,7 @@ Future<void> cargarMesas() async {
     });
   }
 }
+
   List<Map<String, dynamic>> get mesasFiltradas {
   if (filtroSeleccionado == 'Todas') {
     return mesasServidor;
@@ -633,11 +655,14 @@ final colorEstado =
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    botonFiltro('Todas'),
-                    botonFiltro('Dentro'),
-                    botonFiltro('Fondo'),
-                    botonFiltro('Fuera'),
-                  ],
+  botonFiltro('Todas'),
+
+  ...seccionesServidor.map((seccion) {
+    return botonFiltro(
+      seccion['seccion'].toString(),
+    );
+  }).toList(),
+],
                 ),
               ),
             ),
