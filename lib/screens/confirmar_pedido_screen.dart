@@ -5,6 +5,7 @@ import 'pedido_enviado_screen.dart';
 import 'pedido_manager.dart';
 import 'detalle.dart';
 import '../producto_service.dart';
+import '../usuario_sesion.dart';
 
 class ConfirmarPedidoScreen extends StatefulWidget {
   final String mesa;
@@ -502,6 +503,10 @@ static const Color azulBoton = Color(0xFFE2E8F0);
             },
             body: jsonEncode({
               'mesa': widget.mesa,
+              
+              'usuario_id': UsuarioSesion.id,
+  'nombre_creador': UsuarioSesion.nombre,
+  'rol_creador': UsuarioSesion.rol,
               'items': pedido.map((item) {
                 return {
                   'producto': item['producto'],

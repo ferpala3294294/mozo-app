@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'menu_screen.dart';
+import '../usuario_sesion.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -65,13 +66,21 @@ static const Color azulClaro = Color(0xFF94A3B8);
       if (!mounted) return;
 
       if (respuesta.statusCode == 200 && datos['exito'] == true) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const MenuScreen(),
-          ),
-        );
-      } else {
+
+  UsuarioSesion.establecer(
+  idUsuario: datos['usuario']['id'],
+  nombreUsuario: datos['usuario']['nombre'],
+  rolUsuario: datos['usuario']['roles'][0].toString(),
+);
+
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const MenuScreen(),
+    ),
+  );
+}
+       else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
