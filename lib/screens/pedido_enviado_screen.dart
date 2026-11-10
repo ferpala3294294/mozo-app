@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'menu_screen.dart';
 import 'login_screen.dart';
+import '../usuario_sesion.dart';
 
 class PedidoEnviadoScreen extends StatelessWidget {
   final String mesa;
@@ -93,26 +94,26 @@ static const Color verde = Color(0xFF10B981);
                             const SizedBox(height: 25),
 
                             // NOMBRE
-                            const Text(
-                              'Admin',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFF1E293B),
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            Text(
+  UsuarioSesion.nombre,
+  textAlign: TextAlign.center,
+  style: const TextStyle(
+    color: Color(0xFF1E293B),
+    fontSize: 26,
+    fontWeight: FontWeight.bold,
+  ),
+),
 
                             const SizedBox(height: 8),
 
                             // ROL
-                            const Text(
-                              'Mozo',
-                              style: TextStyle(
-                                color: Color(0xFF64748B),
-                                fontSize: 20,
-                              ),
-                            ),
+                            Text(
+  UsuarioSesion.rol,
+  style: const TextStyle(
+    color: Color(0xFF64748B),
+    fontSize: 20,
+  ),
+),
 
                             const SizedBox(height: 30),
 

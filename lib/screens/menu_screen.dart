@@ -5,6 +5,7 @@ import 'login_screen.dart';
 import 'pedido_manager.dart';
 import '../mesa_service.dart';
 import 'notificaciones_mozo.dart';
+import '../usuario_sesion.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -302,23 +303,23 @@ int totalMesa(Map<String, dynamic> mesa) {
                               ),
                             ),
                             const SizedBox(height: 25),
-                            const Text(
-                              'Admin',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: azulOscuro,
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            Text(
+  UsuarioSesion.nombre,
+  textAlign: TextAlign.center,
+  style: const TextStyle(
+    color: azulOscuro,
+    fontSize: 26,
+    fontWeight: FontWeight.bold,
+  ),
+),
                             const SizedBox(height: 8),
-                            const Text(
-                              'Mozo',
-                              style: TextStyle(
-                                color: Color(0xFF64748B),
-                                fontSize: 20,
-                              ),
-                            ),
+                            Text(
+  UsuarioSesion.rol,
+  style: const TextStyle(
+    color: Color(0xFF64748B),
+    fontSize: 20,
+  ),
+),
                             const SizedBox(height: 30),
                             const Divider(
                               color: Color(0xFFE2E8F0),
@@ -491,14 +492,30 @@ final colorEstado =
           ),
 
           const SizedBox(height: 5),
-          Text(
+                    Text(
             seccion,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              color: Color(0xFF64748B), 
+              color: Color(0xFF64748B),
               fontSize: 12,
             ),
           ),
+
+          if ((mesa['nombre_creador'] ?? '').toString().isNotEmpty) ...[
+            const SizedBox(height: 4),
+            Text(
+              'Mozo: ${mesa['nombre_creador']}',
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                color: Color(0xFF64748B),
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+
           const SizedBox(height: 8),
           Text(
             formatoPrecio(total),
