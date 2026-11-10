@@ -504,7 +504,7 @@ final colorEstado =
           if ((mesa['nombre_creador'] ?? '').toString().isNotEmpty) ...[
             const SizedBox(height: 4),
             Text(
-              'Mozo: ${mesa['nombre_creador']}',
+              '${mesa['rol_creador'] ?? 'Usuario'}: ${mesa['nombre_creador']}',
               textAlign: TextAlign.center,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
