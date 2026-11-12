@@ -9,11 +9,13 @@ import '../usuario_sesion.dart';
 
 class ConfirmarPedidoScreen extends StatefulWidget {
   final String mesa;
+  final int idMesa;
   final List<Map<String, dynamic>> pedido;
 
   const ConfirmarPedidoScreen({
     super.key,
     required this.mesa,
+     required this.idMesa,
     required this.pedido,
   });
 
@@ -503,7 +505,7 @@ static const Color azulBoton = Color(0xFFE2E8F0);
             },
             body: jsonEncode({
               'mesa': widget.mesa,
-              
+              'id_mesa': widget.idMesa,
               'usuario_id': UsuarioSesion.id,
   'nombre_creador': UsuarioSesion.nombre,
   'rol_creador': UsuarioSesion.rol,

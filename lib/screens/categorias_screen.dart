@@ -59,26 +59,12 @@ static const Color azulOscuro = Color(0xFF1E293B);
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          'Mesa $mesa',
-                          style: const TextStyle(
-                            color: Color(0xFFE2E8F0),
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                       
                       ],
                     ),
                   ),
 
-                  const Padding(
-                    padding: EdgeInsets.only(right: 8),
-                    child: Icon(
-                      Icons.notifications_none,
-                      color: Colors.white,
-                      size: 34,
-                    ),
-                  ),
+                
                 ],
               ),
             ),

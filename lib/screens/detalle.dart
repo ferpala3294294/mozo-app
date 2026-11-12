@@ -314,6 +314,7 @@ cargarPedidosServidor();
       MaterialPageRoute(
         builder: (context) => ConfirmarPedidoScreen(
           mesa: 'MESA ${widget.mesa}',
+            idMesa: widget.idMesa,
           pedido: List<Map<String, dynamic>>.from(
             productosPendientes,
           ),
