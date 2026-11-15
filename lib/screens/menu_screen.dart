@@ -398,12 +398,12 @@ int totalMesa(Map<String, dynamic> mesa) {
 
   switch (estado) {
     case 'recibido':
-      return const Color(0xFF2585D8);
+        return const Color(0xFFDC3545);
 
     case 'preparando':
     case 'en preparación':
     case 'en preparacion':
-      return const Color(0xFFF28C28);
+          return const Color(0xFFFFC107);
 
     case 'listo':
       return const Color(0xFF22A565);
