@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
@@ -13,9 +12,7 @@ class MesaService {
         .timeout(const Duration(seconds: 10));
 
     if (response.statusCode != 200) {
-      throw Exception(
-        'Error al obtener las mesas: ${response.statusCode}',
-      );
+      throw Exception('Error al obtener las mesas: ${response.statusCode}');
     }
 
     final Map<String, dynamic> respuesta =
@@ -29,9 +26,7 @@ class MesaService {
 
     final List<dynamic> datos = respuesta['data'] ?? [];
 
-    return datos
-        .map((mesa) => Map<String, dynamic>.from(mesa as Map))
-        .toList();
+    return datos.map((mesa) => Map<String, dynamic>.from(mesa as Map)).toList();
   }
 
   // Obtener todos los pedidos pendientes de una mesa por su ID real.
@@ -39,11 +34,7 @@ class MesaService {
     int idMesa,
   ) async {
     final response = await http
-        .get(
-          Uri.parse(
-            '$baseUrl/api/mesas/$idMesa/pedidos-pendientes',
-          ),
-        )
+        .get(Uri.parse('$baseUrl/api/mesas/$idMesa/pedidos-pendientes'))
         .timeout(const Duration(seconds: 10));
 
     if (response.statusCode != 200) {
@@ -65,7 +56,35 @@ class MesaService {
         .map((pedido) => Map<String, dynamic>.from(pedido as Map))
         .toList();
   }
-    // Obtener pedidos de cocina y sus estados.
+
+  // Marcar un pedido específico como SERVIDO.
+  static Future<void> marcarPedidoComoServido(int idPedido) async {
+    final response = await http
+        .patch(
+          Uri.parse('$baseUrl/api/cocina/pedidos/$idPedido/estado'),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode({'fk_id_estado': 4}),
+        )
+        .timeout(const Duration(seconds: 10));
+
+    if (response.statusCode != 200) {
+      throw Exception(
+        'No se pudo marcar el pedido como servido: '
+        '${response.statusCode}',
+      );
+    }
+
+    final respuesta = jsonDecode(response.body) as Map<String, dynamic>;
+
+    if (respuesta['fk_id_estado'] != 4) {
+      throw Exception('Laravel no confirmó el estado SERVIDO.');
+    }
+  }
+
+  // Obtener pedidos de cocina y sus estados.
   static Future<List<Map<String, dynamic>>> obtenerPedidosCocina() async {
     final response = await http
         .get(Uri.parse('$baseUrl/api/cocina/pedidos'))
@@ -83,16 +102,15 @@ class MesaService {
         .map((pedido) => Map<String, dynamic>.from(pedido as Map))
         .toList();
   }
-    // Obtener todas las secciones registradas en Laravel.
+
+  // Obtener todas las secciones registradas en Laravel.
   static Future<List<Map<String, dynamic>>> obtenerSecciones() async {
     final response = await http
         .get(Uri.parse('$baseUrl/api/secciones'))
         .timeout(const Duration(seconds: 10));
 
     if (response.statusCode != 200) {
-      throw Exception(
-        'Error al obtener las secciones: ${response.statusCode}',
-      );
+      throw Exception('Error al obtener las secciones: ${response.statusCode}');
     }
 
     final Map<String, dynamic> respuesta =
@@ -108,29 +126,32 @@ class MesaService {
         .map((seccion) => Map<String, dynamic>.from(seccion as Map))
         .toList();
   }
+
   // Obtener todas las categorías desde Laravel.
-static Future<List<Map<String, dynamic>>> obtenerCategorias() async {
-  final response = await http
-      .get(Uri.parse('$baseUrl/api/v1/categorias'))
-      .timeout(const Duration(seconds: 10));
+  static Future<List<Map<String, dynamic>>> obtenerCategorias() async {
+    final response = await http
+        .get(Uri.parse('$baseUrl/api/v1/categorias'))
+        .timeout(const Duration(seconds: 10));
 
-  if (response.statusCode != 200) {
-    throw Exception(
-      'Error al obtener las categorías: ${response.statusCode}',
-    );
+    if (response.statusCode != 200) {
+      throw Exception(
+        'Error al obtener las categorías: ${response.statusCode}',
+      );
+    }
+
+    final Map<String, dynamic> respuesta =
+        jsonDecode(response.body) as Map<String, dynamic>;
+
+    if (respuesta['exito'] != true) {
+      throw Exception('Laravel no devolvió las categorías correctamente.');
+    }
+
+    final List<dynamic> datos = respuesta['data'] ?? [];
+
+    return datos
+        .map((categoria) => Map<String, dynamic>.from(categoria as Map))
+        .toList();
   }
 
-  final Map<String, dynamic> respuesta =
-      jsonDecode(response.body) as Map<String, dynamic>;
-
-  if (respuesta['exito'] != true) {
-    throw Exception('Laravel no devolvió las categorías correctamente.');
-  }
-
-  final List<dynamic> datos = respuesta['data'] ?? [];
-
-  return datos
-      .map((categoria) => Map<String, dynamic>.from(categoria as Map))
-      .toList();
-}
+ 
 }

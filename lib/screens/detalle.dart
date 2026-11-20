@@ -56,6 +56,36 @@ Future<void> cargarPedidosServidor() async {
     debugPrint('Error al cargar pedidos pendientes: $e');
   }
 }
+
+  // Marcar como servido un pedido individual.
+  Future<void> marcarComoServido(int idPedido) async {
+    try {
+      await MesaService.marcarPedidoComoServido(idPedido);
+
+      if (!mounted) return;
+
+      await cargarPedidosServidor();
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Pedido marcado como servido correctamente.'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('No se pudo marcar como servido: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -254,13 +284,14 @@ cargarPedidosServidor();
               .round();
 
       productosServidor.add({
-        'producto': detalle['nombre'] ?? 'Producto',
-        'categoria': '',
-        'detalle': detalle['descripcion'] ?? '',
-        'cantidad': cantidad,
-        'precio': subtotal,
-        'enviado': true,
-      });
+  'producto': detalle['nombre'] ?? 'Producto',
+  'categoria': '',
+  'fk_id_categoria': detalle['fk_id_categoria'],
+  'detalle': detalle['descripcion'] ?? '',
+  'cantidad': cantidad,
+  'precio': subtotal,
+  'enviado': true,
+});
     }
   }
 
@@ -370,12 +401,26 @@ cargarPedidosServidor();
             // =====================================================
             // BARRA SUPERIOR
             // =====================================================
+            
             Container(
-              height: 62,
+              height: 82,
               color: const Color(0xFF121A2B),
               padding: const EdgeInsets.symmetric(horizontal: 4),
               child: Row(
                 children: [
+                  // VOLVER ATRÁS
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                      size: 34,
+                    ),
+                  ),
+
+                  // PERFIL
                   IconButton(
                     onPressed: () {
                       abrirPanelUsuario(context);
@@ -386,6 +431,8 @@ cargarPedidosServidor();
                       size: 28,
                     ),
                   ),
+
+                  // TÍTULO Y MESA
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -408,17 +455,21 @@ cargarPedidosServidor();
                       ],
                     ),
                   ),
+
+                  // NOTIFICACIONES
                   IconButton(
-  onPressed: () => mostrarNotificacionesMozo(context),
-  icon: const Icon(
-    Icons.notifications,
-    color: Colors.white,
-    size: 27,
-  ),
-),
+                    onPressed: () => mostrarNotificacionesMozo(context),
+                    icon: const Icon(
+                      Icons.notifications,
+                      color: Colors.white,
+                      size: 27,
+                    ),
+                  ),
                 ],
               ),
             ),
+
+
 
             // =====================================================
             // CONTENIDO
@@ -634,17 +685,17 @@ cargarPedidosServidor();
                                         ),
                                       ),
                                     ],
-                                    if (enviado) ...[
-                                      const SizedBox(height: 3),
-                                      const Text(
-                                        'Ya enviado a cocina',
-                                        style: TextStyle(
-                                          color: Colors.green,
-                                          fontSize: 9,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
+                                   if (enviado && item['fk_id_categoria'] != 4) ...[
+  const SizedBox(height: 3),
+  const Text(
+    'Ya enviado a cocina',
+    style: TextStyle(
+      color: Colors.green,
+      fontSize: 9,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+],
                                   ],
                                 ),
                               ),
@@ -661,6 +712,97 @@ cargarPedidosServidor();
                           ),
                         );
                       }),
+
+                    // ESTADOS DE LOS PEDIDOS ENVIADOS
+                    ...pedidosServidor.where((pedido) {
+                      final estadoId =
+                          (pedido['fk_id_estado'] as num?)?.toInt() ?? 0;
+
+                      // Los pedidos SERVIDOS no muestran estado ni botón.
+                      return estadoId >= 1 && estadoId <= 3;
+                    }).map((pedido) {
+                      final estadoId =
+                          (pedido['fk_id_estado'] as num?)?.toInt() ?? 0;
+
+                      final idPedido =
+                          (pedido['id_pedido'] as num?)?.toInt();
+
+                      final String nombreEstado = estadoId == 1
+                          ? 'RECIBIDO'
+                          : estadoId == 2
+                              ? 'PREPARANDO'
+                              : 'LISTO';
+
+                      final Color colorEstado = estadoId == 1
+                          ? Colors.red
+                          : estadoId == 2
+                              ? Colors.orange
+                              : Colors.green;
+
+                      return Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.only(bottom: 8),
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: colorEstado.withOpacity(0.35),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  width: 9,
+                                  height: 9,
+                                  decoration: BoxDecoration(
+                                    color: colorEstado,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    'Pedido #${idPedido ?? '-'} - $nombreEstado',
+                                    style: TextStyle(
+                                      color: colorEstado,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            if (estadoId == 3 && idPedido != null) ...[
+                              const SizedBox(height: 10),
+                              SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton.icon(
+                                  onPressed: () =>
+                                      marcarComoServido(idPedido),
+                                  icon: const Icon(Icons.check_circle),
+                                  label: const Text(
+                                    'MARCAR COMO SERVIDO',
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: azulOscuro,
+                                    foregroundColor: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 12,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                      );
+                    }),
+
 
                     const SizedBox(height: 4),
 

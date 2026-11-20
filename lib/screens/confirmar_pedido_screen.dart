@@ -494,6 +494,17 @@ static const Color azulBoton = Color(0xFFE2E8F0);
     });
 
     try {
+      debugPrint('========== PEDIDO A ENVIAR ==========');
+
+for (final item in pedido) {
+  debugPrint(
+    'Producto: ${item['producto']} | '
+    'ID local: ${item['idLocal']} | '
+    'Enviado: ${item['enviado']}',
+  );
+}
+
+debugPrint('====================================');
       final respuesta = await http
           .post(
             Uri.parse(
