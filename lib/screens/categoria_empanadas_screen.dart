@@ -135,7 +135,7 @@ final Color fondo = const Color(0xFFF8F6F0);
       ruta = 'productos/$ruta';
     }
 
-    return 'http://127.0.0.1:8000/api/imagen-producto/$ruta';
+    return 'http://69.6.207.221/api/imagen-producto/$ruta';
   }
 
   // ============================================================

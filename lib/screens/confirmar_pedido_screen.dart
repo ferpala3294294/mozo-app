@@ -508,7 +508,7 @@ debugPrint('====================================');
       final respuesta = await http
           .post(
             Uri.parse(
-              'http://127.0.0.1:8000/api/cocina/pedidos',
+              'http://69.6.207.221/api/cocina/pedidos'
             ),
             headers: {
               'Accept': 'application/json',

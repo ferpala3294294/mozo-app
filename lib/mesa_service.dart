@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
 class MesaService {
-  static const String baseUrl = 'http://127.0.0.1:8000';
+  static const String baseUrl = 'http://69.6.207.221';
 
   // Obtener todas las mesas y sus importes pendientes.
   static Future<List<Map<String, dynamic>>> obtenerMesas() async {

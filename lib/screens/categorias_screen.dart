@@ -84,16 +84,18 @@ static const Color azulOscuro = Color(0xFF1E293B);
 
                   // TARJETAS UN POCO MÁS CHICAS
                   final double altoTarjeta = esCelular
-                       ? (altoDisponible * 0.070).clamp(56.0, 66.0)
+                         ? (altoDisponible * 0.078).clamp(54.0, 64.0)
     : 64.0;
 
                   // ESPACIO ENTRE TARJETAS
-                  final double espacio = esCelular ? 9.0 : 14.0;
+                  final double espacio = esCelular ? 10.0 : 14.0;
 
                   return SingleChildScrollView(
                     padding: EdgeInsets.symmetric(
                       horizontal: paddingHorizontal,
-                        vertical: esCelular ? 16.0 : 30.0,
+                        vertical: esCelular
+    ? (altoDisponible * 0.025).clamp(12.0, 22.0)
+    : 30.0,
                     ),
                     child: Center(
                       child: ConstrainedBox(

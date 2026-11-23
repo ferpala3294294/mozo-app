@@ -291,6 +291,7 @@ cargarPedidosServidor();
   'cantidad': cantidad,
   'precio': subtotal,
   'enviado': true,
+  'servido': pedido['fk_id_estado'] == 4,
 });
     }
   }
@@ -656,7 +657,7 @@ cargarPedidosServidor();
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      item['producto'],
+                                      '${item['producto']}${item['servido'] == true ? ' \u2714' : ''}',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(

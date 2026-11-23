@@ -20,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool cargando = false;
 
   // Para ejecutar Flutter en la misma PC donde corre Laravel.
-  static const String apiBaseUrl = 'http://127.0.0.1:8000';
+  static const String apiBaseUrl = 'http://69.6.207.221';
 
   static const Color azulOscuro = Color(0xFFD97706);
 static const Color azul = Color(0xFF64748B);
