@@ -595,6 +595,7 @@ IconButton(
                     Row(
                       children: [
                         Expanded(
+                          flex: 8,
                           child: categoriaBoton(
                             'Sandwiches',
                             () {
@@ -615,6 +616,7 @@ IconButton(
                         const SizedBox(width: 10),
 
                         Expanded(
+                          flex: 4,
                           child: categoriaBoton(
                             'Pizzas',
                             () {},
@@ -625,6 +627,7 @@ IconButton(
                         const SizedBox(width: 10),
 
                         Expanded(
+                          flex: 8,
                           child: categoriaBoton(
                             'Empanadas',
                             () {
@@ -645,6 +648,7 @@ IconButton(
                         const SizedBox(width: 10),
 
                         Expanded(
+                          flex: 5,
                           child: categoriaBoton(
                             'Bebidas',
                             () {
@@ -664,6 +668,7 @@ IconButton(
                         const SizedBox(width: 10),
 
 Expanded(
+  flex: 5,
   child: categoriaBoton(
     'Combos',
     () {

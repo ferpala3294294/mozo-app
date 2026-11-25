@@ -42,7 +42,7 @@ static const Color azulOscuro = Color(0xFF1E293B);
                     icon: const Icon(
                       Icons.arrow_back,
                       color: Colors.white,
-                      size: 34,
+                      size: 30,
                     ),
                   ),
 
@@ -55,7 +55,7 @@ static const Color azulOscuro = Color(0xFF1E293B);
                           'Categorías',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 25,
+                            fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -82,21 +82,24 @@ static const Color azulOscuro = Color(0xFF1E293B);
                       ? (ancho * 0.06).clamp(20.0, 28.0)
                       : 40.0;
 
-                  // TARJETAS UN POCO MÁS CHICAS
-                  final double altoTarjeta = esCelular
-                         ? (altoDisponible * 0.078).clamp(54.0, 64.0)
+                  // ALTURA DE LAS TARJETAS
+final double altoTarjeta = esCelular
+    ? (altoDisponible * 0.115).clamp(72.0, 84.0)
     : 64.0;
 
-                  // ESPACIO ENTRE TARJETAS
-                  final double espacio = esCelular ? 10.0 : 14.0;
+// ESPACIO ENTRE TARJETAS
+final double espacio = esCelular ? 10.0 : 14.0;
 
-                  return SingleChildScrollView(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: paddingHorizontal,
-                        vertical: esCelular
-    ? (altoDisponible * 0.025).clamp(12.0, 22.0)
-    : 30.0,
-                    ),
+// MARGEN VERTICAL
+final double paddingVertical = esCelular
+    ? (altoDisponible * 0.018).clamp(8.0, 14.0)
+    : 30.0;
+
+return SingleChildScrollView(
+  padding: EdgeInsets.symmetric(
+    horizontal: paddingHorizontal,
+    vertical: paddingVertical,
+  ),
                     child: Center(
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(
@@ -108,7 +111,7 @@ static const Color azulOscuro = Color(0xFF1E293B);
                               '¿Qué querés pedir?',
                               style: TextStyle(
                                 color: azulOscuro,
-                                fontSize: 27,
+                                fontSize: 29,
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
@@ -120,12 +123,12 @@ static const Color azulOscuro = Color(0xFF1E293B);
                               'Mesa $mesa',
                               style: const TextStyle(
                                 color: azulOscuro,
-                                fontSize: 20,
+                                fontSize: 21,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
 
-                            const SizedBox(height: 28),
+                            const SizedBox(height: 24),
 
                             // SANDWICHES
                             GestureDetector(
@@ -316,8 +319,8 @@ SizedBox(height: espacio),
                     icono,
                     color: azulOscuro,
                     size: esCelular
-                        ? (alto * 0.48).clamp(40.0, 55.0)
-                        : (alto * 0.52).clamp(28.0, 42.0),
+    ? (alto * 0.58).clamp(40.0, 48.0)
+    : (alto * 0.52).clamp(28.0, 42.0),
                   ),
                 ),
               ),
@@ -333,7 +336,7 @@ SizedBox(height: espacio),
   color: texto == 'Ver pedido'
       ? Colors.white
       : azulOscuro,
-  fontSize: esCelular ? 21 : 20,
+  fontSize: esCelular ? 23 : 20,
   fontWeight: FontWeight.bold,
 ),
                 ),
